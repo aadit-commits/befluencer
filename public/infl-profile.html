@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="css/index.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+
+    <!-- Jquery link -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        function doPrev(fileCtrl,imgPrev)
+        {
+            let [file] = fileCtrl.files
+            if (file) {
+                imgPrev.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
+    <script>
+      $(document).ready(function()
+      {
+     
+      let active=localStorage.getItem("activeUser");
+      $("#iEmail").val(active).prop("readonly",true);
+      
+      $("#srch").click(function(){
+       // alert("clicked");
+        let obj={
+          type:"get",
+          url:"/srch-infl-profile",
+          data:{
+            iEmail:$("#iEmail").val()
+          }
+        }
+        $.ajax(obj).done(function(jsonAry)
+                    {
+                        if(jsonAry.length==0)
+                        {
+                            alert("Invalid ID");
+                            return;
+                        }
+                        //alert(JSON.stringify(jsonAry));
+                        
+                        $("#iName").val(jsonAry[0].iname);//table colu. wala
+                        $("#iSelGen").val(jsonAry[0].gender);//table colu. wala
+                        $("#iSelDate").val(jsonAry[0].dob);//table colu. wala
+                        $("#iAddress").val(jsonAry[0].address);//table colu. wala
+                        $("#iCity").val(jsonAry[0].city);//table colu. wala
+                        $("#iCont").val(jsonAry[0].contact);//table colu. wala
+                        $("#selFld").val(jsonAry[0].field.split(","));//table colu. wala
+                        $("#insta").val(jsonAry[0].insta);//table colu. wala
+                        $("#yt").val(jsonAry[0].yt);//table colu. wala
+                        $("#txtArea").val(jsonAry[0].other);//table colu. wala
+                       
+                        
+                        $("#prev").prop("src",jsonAry[0].picpath);
+                        $("#hdn").val(jsonAry[0].picpath);
+
+                        //alert($("#hdn").val());
+                        
+
+                    }).fail(function(err)
+                    {
+                        alert(err.statusText);
+                    })
+      })
+
+      $("#save").click(function(){
+
+        location.href="result.html";
+      })
+
+      $("#updt").click(function(){
+        location.href="update.html";
+      })
+
+    })
+    </script>
+
+
+
+
+</head>
+<body>
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+  />
+
+<nav class="navbar bg-dark border-bottom border-body" data-bs-theme="dark" >
+  <nav class="navbar bg-body-tertiary">
+      <div class="container-fluid">
+        <span class="navbar-text">
+          <i class="fa-brands fa-docker" style="color: #B197FC;font-size:40px;float:left"></i> 
+          <div style="float:left;margin-left:10px;">
+              <h2>  Influencer Profile </h2>
+
+          </div>
+       </span>
+      </div>
+
+      <!-- style="float:left;font-size:20px;margin-left:600px; -->
+</nav>
+   <a href="/index.html" >
+
+         <div  style="float:left;font-size:25px;margin-left:600px;margin-right: -25px;color:white">Home </div>
+        <!-- <i class="fa-solid fa-house" style="color: #B197FC;font-size:30px;"></i> -->
+      
+    </a>
+    <a href="/infl-dash.html">
+     <div style="margin-right: 30px;">
+      <div  style="float:left;font-size:25px;margin-left:10px;margin-right:10px;color:white">Dashboard </div>
+      <!-- <i class="fa-solid fa-house" style="color: #B197FC;font-size:30px;"></i> -->
+      </div>
+    </a>
+      </nav>
+      <!-- <div style="width:inherit;height:50px;background-color: #B197FC; ">
+       <h3> <center>Influencer Profile</center> </h3>
+      </div> -->
+  <center>
+    <div style="width:1000px; height:700px; margin-top:20px;margin-bottom: 30px;; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);padding:10px">
+        <div class="modal-header">
+           
+            </div>
+        <!-- ---------------------------- -->
+        <form class="row g-3" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="hdn" id="hdn" onchange="doPrev(this,prev)">
+            <div class="col-md-4">
+              <label for="inputEmail4" class="form-label">Email</label>
+              <input type="email" class="form-control" id="iEmail" name="iEmail" required>
+            </div>
+            
+            <div class="col-md-4" style="margin-left:-100px;margin-top:50px;">
+                <button type="button" class="btn btn-dark" id="srch">Search</button>
+            </div>
+            <div class="col-md-4">
+                
+                <img src="" id="prev" alt="" width="100" height="100" >
+                <input type="file" id="ppic" name="ppic" onchange="doPrev(this,prev)">
+            </div>
+            <!-- ----------------------------- -->
+            <div class="col-md-4">
+              <label for="inputAddress" class="form-label">Name</label>
+              <input type="text" class="form-control" id="iName" name="iName"placeholder="1234 Main St"  required>
+            </div>
+            <div class="col-md-4" style="margin-top:50px">
+                <select id="iSelGen" name="iSelGen" class="form-select" aria-label="Default select example">
+                    <option selected>Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+              </div>
+              <div class="col-md-4" style="margin-top:50px">
+               <input type="date" id="iSelDate" name="iSelDate" class="form-control" required>
+              </div>
+            <!-- ---------------------------------------- -->
+            <div class="col-md-3">
+              <label for="inputAddress2" class="form-label">Address </label>
+              <input type="text" class="form-control" id="iAddress"name="iAddress"  placeholder="Apartment, studio, or floor" required>
+            </div>
+            <div class="col-md-3">
+                <label for="inputAddress2" class="form-label">City</label>
+                <input type="text" class="form-control" id="iCity" name="iCity" placeholder="Apartment, studio, or floor" required>
+              </div>
+              <div class="col-md-3">
+                <label for="inputAddress2" class="form-label">Contact</label>
+                <input type="text" class="form-control" id="iCont" name="iCont" placeholder="Apartment, studio, or floor" required>
+              </div>
+              <div class="col-md-3"  style="margin-top:50px">
+                
+                <select id="selFld" name="selFld" class="form-select" aria-label="Default select example" multiple>
+                    <option selected >Field</option>
+                    <option value="Music">Music</option>
+                    <option value="Dance">Dance</option>
+                    <option value="Acting">Acting</option>
+                    <option value="Fashion">Fashion</option>
+                    <option value="Gaming">Gaming</option>
+                    <option value="Sports">Sports</option>
+                    <option value="Food">Food</option>
+                    <option value="Fitness">Fitness</option>
+                    <option value="Travel">Travel</option>
+                    <option value="Blogger">Blogger</option>
+                  </select>
+              </div>
+              <!-- ----------------------------------------------- -->
+              
+            <div class="col-md-10">
+              <label for="inputCity" class="form-label">Insta URL</label>
+              <input type="text" class="form-control" id="insta" name="insta" >
+            </div>
+            <div class="col-md-2">
+                <i class="fa-brands fa-instagram" style="color: #e449ca; margin-top:35px;margin-left:-120px; font-size:30px;"></i>
+               </div>
+             
+            <div class="col-md-10">
+                <label for="inputCity" class="form-label">Youtube URL</label>
+                <input type="text" class="form-control" id="yt" name="yt">
+              </div>
+              <div class="col-md-2">
+                <i class="fa-brands fa-youtube" style="color: #f00509; margin-top:35px;margin-left:-120px; font-size:30px;"></i>
+               </div>
+               <!-- ------------------------------------------- -->
+
+               <div class="form-floating">
+                <textarea class="form-control" placeholder="Leave a comment here" id="txtArea" name="txtArea"></textarea>
+                <label for="floatingTextarea">Comments</label>
+              </div>
+            
+            <div class="col-12">
+              <button type="submit" id="save" class="btn btn-dark" formaction="/save-infl-profile" >Save</button>
+              <button type="submit" id="updt" class="btn btn-dark" formaction="/update-infl-profile" >Update</button>
+            </div>
+            <div>
+              <span id="saved"></span>
+              <span id="updated"></span>
+            </div>
+          </form>
+       </div>
+  </center>
+
+  <!-- footer -->
+
+  <footer id="footer" class="footer dark-background">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 footer-about">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="sitename">Befluencer</span>
+            </a>
+            <div class="footer-contact pt-3">
+              <p>Ajit Road</p>
+              <p>Bathinda</p>
+              <p class="mt-3"><strong>Phone:</strong> <span>+91 7717627580</span></p>
+              <p><strong>Email:</strong> <span>mishabansal26@gmail.com</span></p>
+            </div>
+            <div class="social-links d-flex mt-4">
+              <a href="https://x.com/misha_bans2007"><i class="fa-brands fa-twitter" style="color: #eaecf1;"></i></a>
+              <a href="https://www.instagram.com/misha27.04/?hl=en"><i class="fa-brands fa-instagram" style="color: #e170dd;"></i></a>
+              <a href="https://www.linkedin.com/in/misha-bansal-9bb4832a0/"><i class="fa-brands fa-linkedin" style="color: #517ecd;"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="/index.html"> Home</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="/index.html"> Services</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="/index.html"> Our Team</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="/index.html"> Reach Us</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Book Events</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Find Influencer</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#">Promotions</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Meet and greet</a></li>
+             
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-12 footer-newsletter">
+            <h4>Our Newsletter</h4>
+            <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+            <form action="forms/newsletter.php" method="post" class="php-email-form">
+              <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe">
+              </div>
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <div class="container text-center">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">GP</strong> <span>All Rights Reserved</span></p>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you've purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+</body>
+</html>

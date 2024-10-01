@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- newbootsrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
+    <!-- jQuery link -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+        <!-- responsive tag -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <script>
+
+    function doLogout()
+    {
+      localStorage.removeItem("activeUser")
+      location.href="/index.html";
+    }
+  </script>
+  <script>
+    $(document).ready(function(){
+      let active=localStorage.getItem("activeUser");
+      $("#wlcm").html(active);
+    })
+  </script>
+</head>
+<body >
+
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+
+  <!-- navbar -->
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-4">
+    <i class="fa-brands fa-docker" style="color: #B197FC;font-size:45px;margin-right: 2px;"></i>
+    <a class="navbar-brand" href="#"><h3>Client Dashboard</h3></a>
+    <div style="color:grey;font-size: 30px;">
+      Welcome!!   <span id="wlcm" style="font-size:20px;;color:grey"></span>
+        </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/index.html"><h5>Home</h5> <span class="sr-only">(current)</span></a>
+        </li>
+             <button type="button" onclick="doLogout()" class="btn btn-outline-light " style="font-size:20px;margin-left: 5%;">
+    Logout
+    <i class="fa-solid fa-right-from-bracket" style="color: #B197FC;font-size:30px;margin-left: 5px;;"></i>
+  </button>
+      </ul>
+    </div>
+ 
+ 
+  </nav>
+   
+  
+<br><br>
+      
+<div class="container ">
+  <div class="row" >
+    <div class="col-sm-4 offset-md-2">
+      <div class="card ">
+        <div style="background-image: url(pics/profilepurple.jpeg);background-repeat: no-repeat;background-size:cover;height:270px;width:300px;"></div>
+        <!-- <img class="card-img-top" src="pics/profilepurple.jpeg" alt="Card image cap" > -->
+        <div class="card-body">
+          <h5 class="card-title">Profile</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="client-profile.html" class="btn btn-dark">Go to Profile</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="card ">
+        <div style="background-image: url(pics/search.jpg);background-repeat: no-repeat;background-size:cover;height:270px;width:330px;"></div>
+     <!-- <img class="card-img-top" src="pics/search.jpg" alt="Card image cap" > -->
+        <div class="card-body">
+          <h5 class="card-title">Find Influencer</h5>
+          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <a href="infl-finder.html" class="btn btn-dark">Search</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+</html>

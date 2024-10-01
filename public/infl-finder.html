@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+ 
+
+  <link rel="stylesheet" href="css/index.css">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<!-- responsive tag
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+  <script>
+
+  var module = angular.module("myModule", []);
+    var controller = module.controller("myController", function ($scope, $http) {
+
+      $scope.jsonsomecityArray;
+      $scope.showsomecities = function()
+       {
+        //  alert($scope.selField);
+        
+        let url = "/show-some-cities?field=" + $scope.selField;
+
+        $http.get(url).then(ok, notOk);
+
+        function ok(response) {
+        //  alert (JSON.stringify(response.data));
+          $scope.jsonsomecityArray = response.data;
+
+        }
+        function notOk(err) {
+          alert(err);
+
+        }
+      }
+
+      $scope.find = function () {
+        //alert("find");
+
+        let url = "/find-details?field=" + $scope.selField + "&city=" + $scope.selCity;
+
+        $http.get(url).then(ok, notOk);
+
+        function ok(response) {
+          //alert (JSON.stringify(response.data));
+          $scope.jsonDetailsAry = response.data;
+
+        }
+        function notOk(err) {
+          alert(err);
+
+        }
+      }
+
+      $scope.findbyname = function () {
+        // alert($scope.name);
+
+        let url = "/find-by-name?iname=" + $scope.name;
+
+        $http.get(url).then(ok, notOk);
+
+        function ok(response) {
+          //alert(JSON.stringify(response.data));
+          $scope.jsonDetailsAry = response.data;
+
+        }
+        function notOk(err) {
+          alert(err);
+
+        }
+      }
+
+
+      $scope.showInfo = function (index) {
+        $scope.fullDetailsAry = $scope.jsonDetailsAry[index];
+        // alert(index);
+      }
+      // let active=localStorage.getItem("activeUser");
+      // $("#sndmail").click(function () {
+            //     //alert("clicked");
+            //     let obj = {
+            //         type: "get",
+            //         url: "/send-mail",
+            //         data: {
+            //             mail: active
+            //         }
+            //     }
+            //     $.ajax(obj).done(function (resp) {
+            //        // alert(resp);
+
+
+            //     }).fail(function (err) {
+            //         alert(err.statusText);
+            //     })
+
+            // })
+
+    })
+  </script>
+</head>
+
+<body ng-app="myModule" ng-controller="myController">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"    />
+
+
+  <!-- navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-4">
+    <i class="fa-brands fa-docker" style="color: #B197FC;font-size:45px;margin-right:1%"></i>
+    <a class="navbar-brand" href="#"><h3>Find Influencer</h3></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-right active">
+          <a class="nav-link" href="/index.html">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-right active ">
+          <a class="nav-link" href="/client-dash.html">Dashboard <span class="sr-only">(current)</span></a>
+        </li>
+      
+      </ul>
+    </div>
+  </nav>
+  <!-- <div style="width:inherit;height:50px;background-color: #B197FC;text-align: center; ">
+      <h3> <center>Find Influencer</center> </h3>
+     </div> -->
+
+
+
+
+  <div class="container" style="margin-top:50px;margin-left:10%;">
+    <div style="float: left;width:30%;">
+      <select class="form-control" ng-model="selField" ng-change="showsomecities();">
+        <option value=""> Select Field</option>
+        <option value="Music">Music</option>
+        <option value="Dance">Dance</option>
+        <option value="Acting">Acting</option>
+        <option value="Fashion">Fashion</option>
+        <option value="Gaming">Gaming</option>
+        <option value="Sports">Sports</option>
+        <option value="Food">Food</option>
+        <option value="Fitness">Fitness</option>
+        <option value="Travel">Travel</option>
+        <option value="Blogger">Blogger</option>
+      </select>
+    </div>
+    <div style="float: left;margin-left:10px; width:30%;">
+      <select class="form-control" aria-label="Default select example"  ng-model="selCity">
+        <option value="">Select City</option>
+        <option ng-repeat="obj in jsonsomecityArray" value="{{obj.city}}">{{obj.city}}</option>
+
+      </select>
+    </div>
+    <div style="float: left;margin-left:5%;"> <button type="button" class="btn btn-outline-dark"
+        ng-click="find();">Find Now</button></div>
+
+  </div>
+  <div class="container " style="margin-top: 100px;  ;margin-left:10%;">
+    <div style="float: left;">
+      <label for="exampleInputEmail1" class="form-label">Name</label>
+      <input type="text" class="form-control" id="srchname" aria-describedby="emailHelp" ng-model="name">
+    </div>
+    <div style="float: left; margin-top: 35px; margin-left: 20px;"> <button type="button" class="btn btn-outline-dark"
+        ng-click="findbyname();">Find By Name</button></div>
+
+  </div>
+
+  <br><br><br><br><br>
+
+  <div style="width:1220px;height:800px;margin-top: 5px;margin-left: 20px;margin-bottom: 30px;">
+
+
+    <!-- card -->
+    <div class="card"
+      style="width: 18rem;height:490px;float:left;margin-left:70px;margin-top:50px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+      ng-repeat="obj in jsonDetailsAry">
+      <img src="{{obj.picpath}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{obj.iname}}</h5>
+        <p class="card-text">{{obj.gender}}</p>
+        <a href="{{obj.insta}}" style="text-decoration: none;color:grey">
+          <p class="card-text" > View More on Instagram </p>
+        </a>
+        <a href="{{obj.yt}}" style="text-decoration: none;color:grey">
+          <p class="card-text">View more on Youtube </p>
+        </a>
+
+        <br>
+        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#FullModal"
+          ng-click="showInfo($index);">
+          More
+        </button>
+      </div>
+    </div>
+
+
+    <!-- full details modal of influencer -->
+
+
+    <div class="modal fade" id="FullModal" tabindex="-1"role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+      style="border:1px solid black">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Know Me</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div style="
+              width:inherit;
+              height:180px;   ">
+
+              <div>
+                <img src="{{fullDetailsAry.picpath}}" width="150" height="150" style="float:left">
+              </div>
+              <div style=" margin-left:170px;">
+                <h3>{{fullDetailsAry.iname}}</h3>
+                <h5>{{fullDetailsAry.field}}</h5>
+                <br>
+                <a href="https://wa.me/{{fullDetailsAry.contact}}/?text=Heloo%20{{fullDetailsAry.iname}}" class="btn btn-outline-primary" id="sndmail">
+                 Contact
+                </a>
+              </div>
+
+            </div>
+            <div style="
+              width:450px;
+              height:430px;
+              float:left;
+             
+                ">
+              <p>
+              <h6>Full Name:</h6>
+              <h8>{{fullDetailsAry.iname}}</h8>
+              </p>
+              <p>
+              <h6>DOB:</h6>
+              <h8>{{fullDetailsAry.dob}}</h8>
+              </p>
+              <p>
+              <h6>Email:</h6>
+              <h8>{{fullDetailsAry.email}}</h8>
+              </p>
+              <p>
+              <h6>Phone:</h6>
+              <h8>{{fullDetailsAry.contact}}</h8>
+              </p>
+              <p>
+              <h6>City:</h6>
+              <h8>{{fullDetailsAry.city}}</h8>
+              </p>
+              <p>
+              <h6>Address:</h6>
+              <h8>{{fullDetailsAry.address}}</h8>
+              </p>
+
+
+
+              <div>
+                <div style="float:left;margin-left:10px; ">
+
+                  <a href="{{fullDetailsAry.insta}}">
+                    <i class="fa-brands fa-instagram" style="color: #e449ca; font-size:30px;"></i>
+                  </a>
+                  <label for="inputCity" class="form-label">Insta</label>
+                </div>
+
+
+                <div style="float:left;margin-left: 30px;;">
+
+                  <a href="{{fullDetailsAry.yt}}">
+                    <i class="fa-brands fa-youtube" style="color: #f00509;  font-size:30px;"></i>
+                  </a>
+                  <label for="inputCity" class="form-label">Youtube</label>
+                </div>
+
+              </div>
+
+            </div>
+
+            <br>
+
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- footer -->
+
+  <footer id="footer" class="footer dark-background">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 footer-about">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="sitename">GP</span>
+            </a>
+            <div class="footer-contact pt-3">
+              <p>A108 Adam Street</p>
+              <p>New York, NY 535022</p>
+              <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+              <p><strong>Email:</strong> <span>info@example.com</span></p>
+            </div>
+            <div class="social-links d-flex mt-4">
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Home</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> About us</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Services</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Terms of service</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Privacy policy</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Web Design</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Web Development</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Product Management</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Marketing</a></li>
+              <li><i class="bi bi-chevron-right"></i> <a href="#"> Graphic Design</a></li>
+            </ul>
+          </div>
+
+          <div class="col-lg-4 col-md-12 footer-newsletter">
+            <h4>Our Newsletter</h4>
+            <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+            <form action="forms/newsletter.php" method="post" class="php-email-form">
+              <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe">
+              </div>
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="copyright">
+      <div class="container text-center">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">GP</strong> <span>All Rights Reserved</span></p>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you've purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+
+
+</body>
+
+</html>
