@@ -11,7 +11,7 @@ Forgot Password: In case user forgots the password while logging in the website,
 
 User-Friendly Interface: The platform is designed for ease of use, making it simple for both influencers and brands to navigate and connect.
 
-You can explore my website from the following link:
+You can explore the website from the following link:
 https://befluencer.onrender.com/
 
 
